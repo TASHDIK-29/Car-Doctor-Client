@@ -1,14 +1,33 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/logo.svg'
+import { useContext } from "react";
+import { AuthContext } from "../../auth/AuthProvider";
+
+
 const Nav = () => {
 
-    const navLinks =<>
-    
-    <NavLink className='mx-4 text-lg font-semibold' to = '/'>Home</NavLink>
-    <NavLink className='mx-4 text-lg font-semibold' to = '/login'>Login</NavLink>
-    <NavLink className='mx-4 text-lg font-semibold' to = '/signUp'>Sign Up</NavLink>
-    
-    
+    const { user, loginOut } = useContext(AuthContext);
+
+    const handelLogout = () =>{
+        loginOut()
+        
+    }
+
+    const navLinks = <>
+
+        <NavLink className='mx-4 text-lg font-semibold' to='/'>Home</NavLink>
+
+        {user ? <div>
+            <NavLink className='mx-4 text-lg font-semibold' to='/bookings'>My Bookings</NavLink>
+            <NavLink onClick={handelLogout} className='mx-4 text-lg font-semibold' to='/login'>Log Out</NavLink>
+        </div>
+            : <div>
+                <NavLink className='mx-4 text-lg font-semibold' to='/login'>Login</NavLink>
+                <NavLink className='mx-4 text-lg font-semibold' to='/signUp'>Sign Up</NavLink>
+            </div>
+        }
+
+
     </>
 
     return (
