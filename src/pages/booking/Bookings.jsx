@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import BookingRow from "./BookingRow";
 import axios from "axios";
+import useAuthSecure from "../../customHooks/useAuthSecure";
 
 const Bookings = () => {
 
@@ -9,18 +10,20 @@ const Bookings = () => {
 
     const [bookings, setBookings] = useState([]);
 
+    const axiosSecure = useAuthSecure();
+
     const handelDelete = id => {
         const proceed = confirm('Are You Sure?');
         if (proceed) {
-            fetch(`http://localhost:5000/bookings/${id}`, {
+            fetch(`https://car-doctor-server-zeta-blue.vercel.app/bookings/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.deletedCount) {
 
-                        fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+                        fetch(`https://car-doctor-server-zeta-blue.vercel.app/bookings?email=${user?.email}`)
                             .then(res => res.json())
                             .then(data => {
                                 // console.log('hello', data);
@@ -33,7 +36,7 @@ const Bookings = () => {
 
 
     const handelConfirm = id => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://car-doctor-server-zeta-blue.vercel.app/bookings/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
@@ -42,9 +45,9 @@ const Bookings = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data.modifiedCount) {
-                    fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+                    fetch(`https://car-doctor-server-zeta-blue.vercel.app/bookings?email=${user?.email}`)
                         .then(res => res.json())
                         .then(data => {
                             // console.log('hello', data);
@@ -54,10 +57,10 @@ const Bookings = () => {
             })
     }
 
-    // const url = `http://localhost:5000/bookings?email=${user?.email}`
+    // const url = `https://car-doctor-server-zeta-blue.vercel.app/bookings?email=${user?.email}`
 
     useEffect(() => {
-        // fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+        // fetch(`https://car-doctor-server-zeta-blue.vercel.app/bookings?email=${user?.email}`)
         //     .then(res => res.json())
         //     .then(data => {
         //         // console.log('hello', data);
@@ -67,7 +70,7 @@ const Bookings = () => {
 
         // By axios
 
-        axios.get(`http://localhost:5000/bookings?email=${user?.email}`, {withCredentials: true})
+        axiosSecure.get(`/bookings?email=${user?.email}`, {withCredentials: true})
         .then(res =>{
             setBookings(res.data);
         })

@@ -1,14 +1,27 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import useAuthSecure from "../../customHooks/useAuthSecure";
 
 const Services = () => {
 
     const [services, setServices] = useState([]);
 
+    const axiosSecure = useAuthSecure();
+
     useEffect( () => {
-        fetch('http://localhost:5000/services')
-        .then(res => res.json())
-        .then(data => setServices(data))
+        // fetch('https://car-doctor-server-zeta-blue.vercel.app/services')
+        // .then(res => res.json())
+        // .then(data => setServices(data))
+
+        axiosSecure.get('/services')
+        .then(res => {
+            // console.log(res.data);
+            setServices(res.data);
+        })
+
+
+
+
     }, [])
 
     return (

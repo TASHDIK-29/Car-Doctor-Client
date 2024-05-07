@@ -19,18 +19,18 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password);
+        // console.log(email, password);
 
         loginUser(email, password)
             .then(result => {
-                console.log(result.user);
+                // console.log(result.user);
                 // navigate(location?.state ? location.state : '/')
 
                 const user = { email };
                 // Get access token
-                axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
+                axios.post('https://car-doctor-server-zeta-blue.vercel.app/jwt', user, {withCredentials: true})
                 .then(res =>{
-                    console.log(res.data);
+                    // console.log(res.data);
 
                     if(res.data.success){
                        navigate(location?.state ? location.state : '/') 

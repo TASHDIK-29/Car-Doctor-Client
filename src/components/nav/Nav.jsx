@@ -6,10 +6,11 @@ import { AuthContext } from "../../auth/AuthProvider";
 
 const Nav = () => {
 
-    const { user, loginOut } = useContext(AuthContext);
+    const { user, loginOut, clearCookie } = useContext(AuthContext);
 
     const handelLogout = () =>{
-        loginOut()
+        clearCookie();
+        loginOut();
         
     }
 

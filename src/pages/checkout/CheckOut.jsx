@@ -32,9 +32,9 @@ const CheckOut = () => {
             price
         }
 
-        console.log(order);
+        // console.log(order);
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://car-doctor-server-zeta-blue.vercel.app/bookings', {
             method: 'POST',
             headers:{
                 'content-type': 'application/json'
@@ -43,7 +43,7 @@ const CheckOut = () => {
         })
         .then(res => res.json())
         .then(data =>{
-            console.log(data);
+            // console.log(data);
             if(data.insertedId){
                 alert('Successfully Booked')
             }
